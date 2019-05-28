@@ -1,0 +1,23 @@
+test: step
+name: create_account_project_member
+collection:
+  name: controller
+method: POST
+url: $controller/v2/accounts/
+type: raw
+assertQuick:
+  status: 201 Created
+headers:
+  Authorization: *
+body: |-
+  {
+    "first_name": "$firstname",
+    "last_name": "$lastname",
+    "email": "$project_member_email",
+    "password": "$password",
+    "confirm_password": "$password"
+  }
+greps:
+  - varname: $project_member_account_id
+    type: json
+    expression: $.id

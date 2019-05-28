@@ -1,0 +1,12 @@
+test: case
+name: delete_account_positive
+description: Delete account with valid data
+casedetails:
+  defaultCollection: controller
+  steps:
+    - name: get_token
+      loadFrom: auth
+    - name: create_account
+    - name: get_token_via_password_grant
+      loadFrom: auth
+    - name: delete_account

@@ -1,0 +1,24 @@
+test: case
+name: get_all_projects_positive
+description: Get all projects for user
+casedetails:
+  defaultCollection: controller
+  steps:
+    - name: get_token
+      loadFrom: auth
+    - name: create_account
+    - name: get_token_via_password_grant
+      loadFrom: auth
+    - name: create_project
+      greps:
+        - varname: $project_id
+          type: json
+          expression: $.id
+    - name: get_all_projects
+      asserts:
+        - key: $.results.[0].id
+          type: json
+          operator: eq
+          expected: $project_id
+    - name: delete_project
+    - name: delete_account

@@ -1,0 +1,24 @@
+test: set
+name: smoke_tests_controller
+description: Smoke test set for Loadero controller (High priority cases)
+cases:
+ - create_account_positive - done
+ - delete_account_positive
+ - create_account_negative_already_used_email
+ - get_account_positive - done
+ - get_current_account_positive
+ - reset_account_password_positive
+ - send_password_reset_token_positive
+ - update_account_positive
+
+ - create_project_positive
+ - delete_project_positive
+ - get_all_projects_positive
+ - get_project_positive
+ - reset_project_aws_setup_positive
+ - update_project_positive
+
+ - create_invited_project_member_positive
+ - delete_invited_project_member_positive
+ - create_project_member_positive
+ - delete_project_member_positive

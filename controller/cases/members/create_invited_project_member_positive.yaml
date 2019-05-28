@@ -1,0 +1,34 @@
+test: case
+name: create_invited_project_member_positive
+description: Create project member with email which is not registered (invite sent)
+casedetails:
+  defaultCollection: controller
+  vars:
+    $project_member_email: $genEmail(25)
+  steps:
+    - name: get_token
+      loadFrom: auth
+    - name: create_account
+    - name: get_token_via_password_grant
+      loadFrom: auth
+    - name: create_project
+      greps:
+        - varname: $project_id
+          type: json
+          expression: $.id
+    - name: create_project_member
+    - name: get_all_invited_project_members
+      asserts:
+        - key: $.results.[0].email
+          type: json
+          operator: eq
+          expected: $project_member_email
+        - key: $.results.[0].role
+          type: json
+          operator: eq
+          expected: "administrator"
+        - key: $.results.[0].project_id
+          type: json
+          operator: eq
+          expected: $project_id
+    - name: delete_account

@@ -1,0 +1,11 @@
+test: environment
+name: STAGE
+globalVars:
+  $auth: *
+  $controller: *
+  $basic_auth: *
+  $user_auth: *
+  $password: password123
+  $firstname: QA
+  $lastname: TEST
+  $email: $genEmail(25)

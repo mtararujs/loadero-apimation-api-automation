@@ -1,0 +1,11 @@
+test: step
+name: delete_account
+collection:
+  name: controller
+method: DELETE
+url: $controller/v2/accounts/$account_id/
+assertQuick:
+  status: 204 No Content
+headers:
+  X-Confirm-Password: $password
+  Authorization: *

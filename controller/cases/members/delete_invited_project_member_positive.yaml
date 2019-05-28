@@ -1,0 +1,31 @@
+test: case
+name: delete_invited_project_member_positive
+description: Delete invited project member
+casedetails:
+  defaultCollection: controller
+  vars:
+    $project_member_email: $genEmail(25)
+  steps:
+    - name: get_token
+      loadFrom: auth
+    - name: create_account
+    - name: get_token_via_password_grant
+      loadFrom: auth
+    - name: create_project
+      greps:
+        - varname: $project_id
+          type: json
+          expression: $.id
+    - name: create_project_member
+      greps:
+        - varname: $project_member_id
+          type: json
+          expression: $.id
+    - name: delete_invited_project_member
+    - name: get_all_invited_project_members
+      asserts:
+        - key: $.results
+          type: json
+          operator: eq
+          expected: "null"
+    - name: delete_account

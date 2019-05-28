@@ -1,0 +1,14 @@
+test: step
+name: get_all_project_members
+collection:
+  name: controller
+method: GET
+url: $controller/v2/projects/$project_id/members/
+type: raw
+queryParams:
+  limit: ["0"]
+  offset: ["0"]
+assertQuick:
+  status: 200 OK
+headers:
+  Authorization: *

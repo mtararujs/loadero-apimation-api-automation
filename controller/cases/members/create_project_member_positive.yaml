@@ -1,0 +1,42 @@
+test: case
+name: create_project_member_positive
+description: Create project member with email which is already registered
+casedetails:
+  defaultCollection: controller
+  vars:
+    $project_member_email: $genEmail(25)
+  steps:
+    - name: get_token
+      loadFrom: auth
+    - name: create_account
+    - name: create_account_project_member
+    - name: get_token_via_password_grant
+      loadFrom: auth
+    - name: create_project
+      greps:
+        - varname: $project_id
+          type: json
+          expression: $.id
+    - name: create_project_member
+    - name: get_all_project_members
+      asserts:
+        - key: $.results.[0].account_id
+          type: json
+          operator: eq
+          expected: $account_id
+        - key: $.results.[1].account_id
+          type: json
+          operator: eq
+          expected: $project_member_account_id
+        - key: $.results.[0].account.email
+          type: json
+          operator: eq
+          expected: $email
+        - key: $.results.[1].account.email
+          type: json
+          operator: eq
+          expected: $project_member_email
+    - name: delete_account
+    - name: get_token_via_password_grant_project_member
+      loadFrom: auth
+    - name: delete_account_project_member

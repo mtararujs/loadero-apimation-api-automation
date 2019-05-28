@@ -1,0 +1,23 @@
+test: case
+name: create_account_negative_already_used_email
+description: Create account with already used email
+casedetails:
+  defaultCollection: controller
+  steps:
+    - name: get_token
+      loadFrom: auth
+    - name: create_account
+      assertQuick:
+        status: 201 Created
+    - name: create_account
+      assertQuick:
+        status: 409 Conflict
+      asserts:
+        - key: $.error
+          type: json
+          operator: eq
+          expected: "Account already exists"
+    - name: get_token_via_password_grant
+      loadFrom: auth
+    - name: get_current_account
+    - name: delete_account

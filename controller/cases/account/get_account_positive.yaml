@@ -1,0 +1,46 @@
+test: case
+name: get_account_positive
+description: Get account
+casedetails:
+  defaultCollection: controller
+  steps:
+    - name: get_token
+      loadFrom: auth
+    - name: create_account
+    - name: get_token_via_password_grant
+      loadFrom: auth
+    - name: get_account
+      asserts:
+        - key: $.id
+          type: json
+          operator: regex
+          expected: $account_id
+        - key: $.email
+          type: json
+          operator: eq
+          expected: $email
+        - key: $.first_name
+          type: json
+          operator: eq
+          expected: $firstname
+        - key: $.last_name
+          type: json
+          operator: eq
+          expected: $lastname
+        - key: $.last_login
+          type: json
+          operator: regex
+          expected: "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+        - key: $.created
+          type: json
+          operator: regex
+          expected: "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+        - key: $.updated
+          type: json
+          operator: regex
+          expected: "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+        - key: $.superuser
+          type: json
+          operator: eq
+          expected: "false"
+    - name: delete_account

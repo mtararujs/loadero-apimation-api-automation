@@ -1,0 +1,15 @@
+test: step
+name: update_project
+collection:
+  name: controller
+method: PUT
+url: $controller/v2/projects/$project_id/
+type: raw
+headers:
+  Authorization: *
+assertQuick:
+  status: 200 OK
+body: |-
+  {
+    "name": "Test Project New"
+  }

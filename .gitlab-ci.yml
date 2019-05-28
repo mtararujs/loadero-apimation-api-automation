@@ -1,0 +1,25 @@
+stages:
+  - lint
+  - execute
+
+lint:
+  stage: lint
+  tags:
+    - stage
+  script: bash lint-yaml.sh
+
+execute-api-tests:
+  stage: execute
+  tags:
+    - stage
+  before_script:
+    - curl -L -O https://github.com/apimation/cli-client/releases/download/v0.52.2/apimation_0.52.2_linux_amd64.zip
+    - unzip apimation_0.52.2_linux_amd64.zip
+    - rm apimation_0.52.2_linux_amd64.zip
+    - ./apimation -h
+  script:
+    - bash execute_api_tests.sh STAGE smoke_tests_controller
+  artifacts:
+    when: always
+    paths:
+      - Reports/sets/*.html

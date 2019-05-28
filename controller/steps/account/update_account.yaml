@@ -1,0 +1,16 @@
+test: step
+name: update_account
+collection:
+  name: controller
+method: PUT
+url: $controller/v2/accounts/$account_id/
+type: raw
+assertQuick:
+  status: 200 OK
+headers:
+  Authorization: *
+body: |-
+  {
+    "first_name": "$new_firstname",
+    "last_name": "$new_lastname"
+  }

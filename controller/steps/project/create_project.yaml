@@ -1,0 +1,18 @@
+test: step
+name: create_project
+collection:
+  name: controller
+method: POST
+url: $controller/v2/projects/
+type: raw
+assertQuick:
+  status: 201 Created
+headers:
+  Authorization: *
+body: |-
+  {
+    "name":"Test Project",
+    "aws_client_id":"test",
+    "aws_client_secret":"test",
+    "aws_account_id":"test"
+  }

@@ -1,0 +1,18 @@
+test: step
+name: get_token
+collection:
+  name: auth
+method: POST
+url: $auth/auth/token/
+type: x-www-form-urlencoded
+headers:
+  Authorization: token
+urlEncodedParams:
+  grant_type: [grant_type]
+  scope: [*]
+assertQuick:
+  status: 200 OK
+greps:
+  - varname: $at
+    type: json
+    expression: $.access_token

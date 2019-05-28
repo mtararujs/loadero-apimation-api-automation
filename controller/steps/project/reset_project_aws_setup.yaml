@@ -1,0 +1,11 @@
+test: step
+name: reset_project_aws_setup
+collection:
+  name: controller
+method: POST
+url: $controller/v2/projects/$project_id/aws/
+type: raw
+headers:
+  Authorization: *
+assertQuick:
+  status: 202 Accepted

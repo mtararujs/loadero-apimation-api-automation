@@ -1,0 +1,10 @@
+test: step
+name: delete_project
+collection:
+  name: controller
+method: DELETE
+url: $controller/v2/projects/$project_id/
+assertQuick:
+  status: 204 No Content
+headers:
+  Authorization: *

@@ -1,0 +1,16 @@
+test: step
+name: create_project_member
+collection:
+  name: controller
+method: POST
+url: $controller/v2/projects/$project_id/members/
+type: raw
+assertQuick:
+  status: 201 Created
+headers:
+  Authorization: *
+body: |-
+  {
+    "role": "administrator",
+    "email": "$project_member_email"
+  }

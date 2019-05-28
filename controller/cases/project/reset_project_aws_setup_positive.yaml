@@ -1,0 +1,64 @@
+test: case
+name: reset_project_aws_setup_positive
+description: Reset aws setup for project
+casedetails:
+  defaultCollection: controller
+  steps:
+    - name: get_token
+      loadFrom: auth
+    - name: create_account
+    - name: get_token_via_password_grant
+      loadFrom: auth
+    - name: create_project
+      greps:
+        - varname: $project_id
+          type: json
+          expression: $.id
+    - name: reset_project_aws_setup
+    - name: get_project
+      asserts:
+        - key: $.id
+          type: json
+          operator: eq
+          expected: $project_id
+        - key: $.name
+          type: json
+          operator: eq
+          expected: "Test Project"
+        - key: $.created
+          type: json
+          operator: regex
+          expected: "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+        - key: $.updated
+          type: json
+          operator: regex
+          expected: "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+        - key: $.account_role
+          type: json
+          operator: eq
+          expected: "administrator"
+        - key: $.payment_status
+          type: json
+          operator: eq
+          expected: "trial"
+        - key: $.aws_account_id
+          type: json
+          operator: eq
+          expected: ""
+        - key: $.aws_client_id
+          type: json
+          operator: eq
+          expected: ""
+        - key: $.aws_ready
+          type: json
+          operator: eq
+          expected: "false"
+        - key: $.aws_artifact_bucket
+          type: json
+          operator: eq
+          expected: ""
+        - key: $.aws_log_bucket
+          type: json
+          operator: eq
+          expected: ""
+    - name: delete_account

@@ -1,0 +1,11 @@
+test: step
+name: delete_invited_project_member
+collection:
+  name: controller
+method: DELETE
+url: $controller/v2/projects/$project_id/members/invited/$project_member_id/
+type: raw
+assertQuick:
+  status: 204 No Content
+headers:
+  Authorization: *

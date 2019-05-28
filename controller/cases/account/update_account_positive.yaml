@@ -1,0 +1,39 @@
+test: case
+name: update_account_positive
+description: Update account
+casedetails:
+  defaultCollection: controller
+  vars:
+    $new_firstname: Updated QA
+    $new_lastname: Updated TEST
+  steps:
+    - name: get_token
+      loadFrom: auth
+    - name: create_account
+    - name: get_token_via_password_grant
+      loadFrom: auth
+    - name: update_account
+      asserts:
+        - key: $.email
+          type: json
+          operator: eq
+          expected: $new_email
+        - key: $.first_name
+          type: json
+          operator: eq
+          expected: $new_firstname
+        - key: $.last_name
+          type: json
+          operator: eq
+          expected: $new_lastname
+    - name: get_current_account
+      asserts:
+        - key: $.first_name
+          type: json
+          operator: eq
+          expected: $new_firstname
+        - key: $.last_name
+          type: json
+          operator: eq
+          expected: $new_lastname
+    - name: delete_account

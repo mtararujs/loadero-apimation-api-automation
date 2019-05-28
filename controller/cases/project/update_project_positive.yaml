@@ -1,0 +1,23 @@
+test: case
+name: update_project_positive
+description: Update project
+casedetails:
+  defaultCollection: controller
+  steps:
+    - name: get_token
+      loadFrom: auth
+    - name: create_account
+    - name: get_token_via_password_grant
+      loadFrom: auth
+    - name: create_project
+      greps:
+        - varname: $project_id
+          type: json
+          expression: $.id
+    - name: update_project
+      asserts:
+        - key: $.name
+          type: json
+          operator: eq
+          expected: "Test Project New"
+    - name: delete_account

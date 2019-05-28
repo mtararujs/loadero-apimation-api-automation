@@ -1,0 +1,31 @@
+test: case
+name: create_account_positive
+description: Create account with valid payload
+casedetails:
+  defaultCollection: controller
+  steps:
+    - name: get_token
+      loadFrom: auth
+    - name: create_account
+      assertQuick:
+        status: 201 Created
+      asserts:
+        - key: $.id
+          type: json
+          operator: regex
+          expected: "^\\d+$"
+        - key: $.email
+          type: json
+          operator: eq
+          expected: $email
+        - key: $.first_name
+          type: json
+          operator: eq
+          expected: $firstname
+        - key: $.last_name
+          type: json
+          operator: eq
+          expected: $lastname
+    - name: get_token_via_password_grant
+      loadFrom: auth
+    - name: delete_account

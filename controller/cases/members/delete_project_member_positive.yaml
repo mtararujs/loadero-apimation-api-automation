@@ -1,0 +1,39 @@
+test: case
+name: delete_project_member_positive
+description: Delete project member
+casedetails:
+  defaultCollection: controller
+  vars:
+    $project_member_email: $genEmail(25)
+  steps:
+    - name: get_token
+      loadFrom: auth
+    - name: create_account
+    - name: create_account_project_member
+    - name: get_token_via_password_grant
+      loadFrom: auth
+    - name: create_project
+      greps:
+        - varname: $project_id
+          type: json
+          expression: $.id
+    - name: create_project_member
+      greps:
+        - varname: $project_member_id
+          type: json
+          expression: $.id
+    - name: delete_project_member
+    - name: get_all_project_members
+      asserts:
+        - key: $.results.[0].account_id
+          type: json
+          operator: eq
+          expected: $account_id
+        - key: $.results.[1].account_id
+          type: json
+          operator: eq
+          expected: "Out of Bounds"
+    - name: delete_account
+    - name: get_token_via_password_grant_project_member
+      loadFrom: auth
+    - name: delete_account_project_member

@@ -1,0 +1,15 @@
+test: step
+name: get_current_account
+collection:
+  name: controller
+method: GET
+url: $controller/v2/accounts/current/
+type: raw
+assertQuick:
+  status: 200 OK
+headers:
+  Authorization: *
+greps:
+  - varname: $account_id
+    type: json
+    expression: $.id
